@@ -27,10 +27,18 @@ document.documentElement.setAttribute("data-theme", "light");
 // Dynamically load images into galleries
 function loadImages(folder, containerId, imageCount) {
   const container = document.getElementById(containerId);
+  
   for (let i = 1; i <= imageCount; i++) {
     const img = document.createElement("img");
-    img.src = `${folder}/${folder}${i}.png`; // Adjust extension if needed
+    const basePath = `${folder}/${folder}${i}`;
+    
+    img.src = `${basePath}.png`; // Try lowercase first
     img.alt = `${folder} image ${i}`;
+
+    img.onerror = () => {
+      img.src = `${basePath}.PNG`; // Fallback to uppercase
+    };
+
     container.appendChild(img);
   }
 }
