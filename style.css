@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --text: #333;
+  --accent: #ffcc00;
+  --sidebar-bg: #222;
+  --sidebar-text: #fff;
+}
+
+[data-theme="dark"] {
+  --bg: #121212;
+  --text: #eee;
+  --sidebar-bg: #181818;
+  --sidebar-text: #ddd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', 'Segoe UI', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 260px;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo img {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav li {
+  margin: 1em 0;
+}
+
+.sidebar nav a {
+  color: var(--sidebar-text);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sidebar nav a:hover {
+  color: var(--accent);
+}
+
+.sidebar nav a.demo-reel {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.contact-info {
+  font-size: 0.9rem;
+  color: var(--sidebar-text);
+}
+
+.contact-info .email {
+  font-size: 0.8rem;
+}
+
+.contact-info p {
+  margin: 0.4em 0;
+}
+
+.contact-info a {
+  color: var(--sidebar-text);
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--sidebar-text);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  align-self: flex-start;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+}
+
+.main-content {
+  margin-left: 260px;
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+#toggleSidebar {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--text);
+  border-radius: 8px;
+  background-color: var(--bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#toggleSidebar:hover {
+  background-color: var(--accent);
+  color: var(--sidebar-bg);
+}
+
+.backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 90;
+}
+
+.backdrop.active {
+  display: block;
+}
+
+.tab {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.tab.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+
+.tab-content {
+  padding-top: 1em;
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding-top: 1em;
+}
+
+.image-gallery img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+}
+
+html, body, .sidebar, .main-content, .backdrop, .topbar, a, button {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox.show {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 90%;
+  max-height: 80%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  z-index: 210;
+}
+
+.lightbox .nav {
+  position: absolute;
+  top: 50%;
+  font-size: 48px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  padding: 16px;
+  z-index: 210;
+  transform: translateY(-50%);
+}
+
+.lightbox .nav.left {
+  left: 20px;
+}
+
+.lightbox .nav.right {
+  right: 20px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  #toggleSidebar {
+    display: inline-block;
+  }
+}

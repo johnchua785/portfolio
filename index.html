@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Backdrop -->
+  <div class="backdrop" id="backdrop"></div>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="john_chua_logo.png" alt="Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="https://youtube.com/your-video" target="_blank" class="demo-reel">Demo Reel</a></li>
+          <li><a href="#art">Art</a></li>
+          <li><a href="#other">Other</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="contact-info">
+          <p class="email">📧 <a href="mailto:john_campochua@outlook.com">john_campochua@outlook.com</a></p>
+          <p>📞 <a href="tel:+12362349635">+1 (236) 234-9635</a></p>
+          <p>🔗 <a href="https://www.linkedin.com/in/john-chua-371868370/" target="_blank">LinkedIn</a></p>
+        </div>
+        <button id="toggleTheme" class="theme-toggle">🌓</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main-content">
+      <button id="toggleSidebar">☰</button>
+      <main class="tab-content">
+        <section id="art" class="tab active">
+          <h2>Art</h2>
+          <div id="art-gallery" class="image-gallery"></div>
+        </section>
+        <section id="other" class="tab">
+          <h2>Other</h2>
+          <div id="other-gallery" class="image-gallery"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- Lightbox -->
+   <div id="lightbox" class="lightbox">
+  <span class="close">&times;</span>
+  <span class="nav left">&#10094;</span> <!-- Left arrow -->
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Expanded view" />
+  <span class="nav right">&#10095;</span> <!-- Right arrow -->
+</div>
+</body>
+</html>
