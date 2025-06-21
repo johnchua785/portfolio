@@ -73,7 +73,7 @@ function showNextImage(direction) {
 window.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded");
   // Load images
-  loadImages("art", "art-gallery", 12);
+  loadImages("art", "art-gallery", 8);
   loadImages("other", "other-gallery", 6);
 
   // Tab switching
