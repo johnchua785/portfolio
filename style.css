@@ -2,10 +2,10 @@
 
 :root {
   --bg: #ffffff;
-  --text: #333;
+  --text: #05070c;
   --accent: #ffcc00;
-  --sidebar-bg: #222;
-  --sidebar-text: #fff;
+  --sidebar-bg: #d3d3d3;
+  --sidebar-text: #303030;
 }
 
 [data-theme="dark"] {
