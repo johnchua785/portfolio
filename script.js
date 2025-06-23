@@ -2,14 +2,14 @@
 document.getElementById("toggleSidebar").addEventListener("click", () => {
   const sidebar = document.getElementById("sidebar");
   const backdrop = document.getElementById("backdrop");
-
   sidebar.classList.toggle("active");
   backdrop.classList.toggle("active");
+});
 
-  backdrop.addEventListener("click", () => {
-    sidebar.classList.remove("active");
-    backdrop.classList.remove("active");
-  });
+// Close sidebar when clicking backdrop
+document.getElementById("backdrop").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("backdrop").classList.remove("active");
 });
 
 // Theme toggle
@@ -24,26 +24,25 @@ document.getElementById("toggleTheme").addEventListener("click", () => {
 // Set light theme by default
 document.documentElement.setAttribute("data-theme", "light");
 
-// Dynamically load images into galleries
+// Load images helper
 function loadImages(folder, containerId, imageCount) {
   const container = document.getElementById(containerId);
-  
+  if (!container) return;
+  container.innerHTML = '';
+
   for (let i = 1; i <= imageCount; i++) {
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     const basePath = `${folder}/${folder}${i}`;
-    
-    img.src = `${basePath}.png`; // Try lowercase first
+    img.src = `${basePath}.png`;
     img.alt = `${folder} image ${i}`;
-
     img.onerror = () => {
-      img.src = `${basePath}.PNG`; // Fallback to uppercase
+      img.src = `${basePath}.PNG`;
     };
-
     container.appendChild(img);
   }
 }
 
-// Lightbox functionality
+// Lightbox
 let currentGallery = [];
 let currentIndex = 0;
 
@@ -63,36 +62,62 @@ function closeLightbox() {
 }
 
 function showNextImage(direction) {
-  currentIndex += direction;
-  if (currentIndex < 0) currentIndex = currentGallery.length - 1;
-  if (currentIndex >= currentGallery.length) currentIndex = 0;
-
+  currentIndex = (currentIndex + direction + currentGallery.length) % currentGallery.length;
   document.getElementById("lightbox-img").src = currentGallery[currentIndex].src;
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded");
-  // Load images
-  loadImages("art", "art-gallery", 8);
-  loadImages("other", "other-gallery", 6);
+  // Default tab: 2d
+  const defaultTabId = "tab-2d";
+  const defaultTab = document.getElementById(defaultTabId);
+  if (defaultTab) {
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    defaultTab.classList.add("active");
+    loadImages("2d", "gallery-2d", 8);
+  }
 
-  // Tab switching
+  // Tab links handler
   document.querySelectorAll('.sidebar nav a[href^="#"]').forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       const targetId = link.getAttribute("href").substring(1);
       const targetTab = document.getElementById(targetId);
+      if (!targetTab) return;
 
       document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      targetTab.classList.add("active");
 
-      setTimeout(() => {
-        if (targetTab) targetTab.classList.add("active");
-      }, 50);
+      if (targetId === "tab-2d") {
+        loadImages("2d", "gallery-2d", 8);
+      } else if (targetId === "tab-3d") {
+        loadImages("3d", "gallery-3d", 6);
+      }
+      // For demo reel (tab-demo), you can just show static content or embed video, no images
+
+      // Close sidebar on mobile
+      document.getElementById("sidebar").classList.remove("active");
+      document.getElementById("backdrop").classList.remove("active");
     });
   });
 
-  // Image click to open lightbox
-  document.addEventListener("click", function (e) {
+  // Load tab from URL hash
+  const hash = window.location.hash.substring(1);
+  if (hash) {
+    const targetTab = document.getElementById(hash);
+    if (targetTab) {
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      targetTab.classList.add("active");
+
+      if (hash === "tab-2d") {
+        loadImages("2d", "gallery-2d", 8);
+      } else if (hash === "tab-3d") {
+        loadImages("3d", "gallery-3d", 6);
+      }
+    }
+  }
+
+  // Lightbox image click
+  document.addEventListener("click", e => {
     if (e.target.tagName === "IMG" && e.target.closest(".image-gallery")) {
       const gallery = Array.from(e.target.closest(".image-gallery").querySelectorAll("img"));
       const index = gallery.indexOf(e.target);
@@ -100,15 +125,18 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Lightbox navigation
+  // Lightbox controls
   document.querySelector(".lightbox .close").addEventListener("click", closeLightbox);
   document.getElementById("lightbox").addEventListener("click", e => {
     if (e.target.id === "lightbox") closeLightbox();
   });
   document.querySelector(".lightbox .left").addEventListener("click", () => showNextImage(-1));
   document.querySelector(".lightbox .right").addEventListener("click", () => showNextImage(1));
+
+  // Keyboard controls
   document.addEventListener("keydown", e => {
     if (!document.getElementById("lightbox").classList.contains("show")) return;
+
     if (e.key === "ArrowLeft") showNextImage(-1);
     if (e.key === "ArrowRight") showNextImage(1);
     if (e.key === "Escape") closeLightbox();

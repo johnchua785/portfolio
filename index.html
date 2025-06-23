@@ -18,12 +18,12 @@
         <img src="john_chua_logo.png" alt="Logo" />
       </div>
       <nav>
-        <ul>
-          <li><a href="https://youtu.be/GXuFrMrkFZY?feature=shared" target="_blank" class="demo-reel">Demo Reel</a></li>
-          <li><a href="#art">Art</a></li>
-          <li><a href="#other">Other</a></li>
-        </ul>
-      </nav>
+  <ul>
+    <li><a href="#tab-demo">Demo Reel</a></li>
+    <li><a href="#tab-2d">2D</a></li>
+    <li><a href="#tab-3d">3D</a></li>
+  </ul>
+</nav>
       <div class="sidebar-footer">
         <div class="contact-info">
           <p class="email">📧 <a href="mailto:john_campochua@outlook.com">john_campochua@outlook.com</a></p>
@@ -36,16 +36,29 @@
     <!-- Main content -->
     <div class="main-content">
       <button id="toggleSidebar">☰</button>
-      <main class="tab-content">
-        <section id="art" class="tab active">
-          <h2>Art</h2>
-          <div id="art-gallery" class="image-gallery"></div>
-        </section>
-        <section id="other" class="tab">
-          <h2>Other</h2>
-          <div id="other-gallery" class="image-gallery"></div>
-        </section>
-      </main>
+
+<main class="tab-content">
+  <section id="tab-demo" class="tab">
+    <h2>Demo Reel</h2>
+    <div class="demo-videos">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/GXuFrMrkFZY" 
+              title="Demo Reel Video 1" frameborder="0" allowfullscreen></iframe>
+
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_2" 
+              title="Demo Reel Video 2" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section id="tab-2d" class="tab">
+    <h2>2D Gallery</h2>
+    <div id="gallery-2d" class="image-gallery"></div>
+  </section>
+
+  <section id="tab-3d" class="tab">
+    <h2>3D Gallery</h2>
+    <div id="gallery-3d" class="image-gallery"></div>
+  </section>
+</main>
     </div>
   </div>
 
